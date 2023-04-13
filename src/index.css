@@ -1,13 +1,41 @@
-body {
+/* font-family: 'Alkatra', cursive;
+font-family: 'Allura', cursive;
+font-family: 'Clicker Script', cursive;
+font-family: 'Great Vibes', cursive;
+font-family: 'Lato', sans-serif;
+font-family: 'Poppins', sans-serif;
+font-family: 'Roboto', sans-serif;
+font-family: 'Rouge Script', cursive; */
+
+
+
+*{
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+
+html{
+  font-size: 62.5%;
 }
+
+
+body{
+  /* border: 2px solid red; */
+}
+
+
+/* @media (min-width:300px) and (max-width:600px){
+
+  body{
+    width: 100vh;
+    height: fit-content;
+  }
+
+
+
+} */
