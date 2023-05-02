@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react'
-import styled from 'styled-components';
+import styled,{ThemeProvider} from 'styled-components';
 import { UseCustom } from '../Context/MainContext';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import HeaderNav from '../MainBody/HeaderNav';
 import Stars from '../MainBody/Stars';
 import Currency from '../MainBody/Currency';
@@ -14,7 +14,7 @@ import { GrFormAdd } from "react-icons/gr";
 import { HiMinusSm } from "react-icons/hi";
 import { Button } from '../Header/Header';
 import FourImages from '../MainBody/FourImages';
-
+import { UseCart } from '../Context/CartContext';
 
 
 const Single = () => {
@@ -22,34 +22,53 @@ const Single = () => {
    
 
   const {SingleLoading,SingleProduct}=UseCustom();
+  const {Carting}=UseCart();
 
   const {id}=useParams();
 
-  const {id:idchan,name,category,company,images,stars,reviews,price,colors,stock,description}=SingleProduct;
+  const {id:idchan,name,company,images,stars,reviews,price,colors,stock,description}=  SingleProduct && SingleProduct;
 
-   const [gcount,scount]=useState(0);
+   const [gcount,scount]=useState(1);
 
    const [gtick,stick]=useState(colors && colors[0]);
 
 
 
 
+   let make=()=>{
+    if(gtick===undefined){
+      return 'block'
+    }else{
+     return 'none'
+    }
+  }
+
+  let takeit=make();
+
+
+
+let theme={
+displayone:takeit
+}
+
+
+
 
 
   let Inc=()=>{
-
-
-   scount(gcount+1);
-
+    
+    if(gcount<stock){
+      scount(gcount+1);
+    }
 
   }
 
 
 
-    let Drc=()=>{
+  let Drc=()=>{
 
-      if(gcount<=0){
-        scount(0);
+      if(gcount<=1){
+        scount(1);
       }else{
         scount(gcount-1);
       }
@@ -60,7 +79,7 @@ const Single = () => {
     
 
 useEffect(()=>{
-  SingleLoading(`https://liquor-api-production.up.railway.app/api/products/take/${id}`);
+  SingleLoading(`http://192.168.0.101:5000/api/products/take/${id}`);
 },[]);
 
 useEffect(() => {
@@ -69,10 +88,12 @@ useEffect(() => {
    
 
   return (
+    
+    <ThemeProvider theme={theme}>
 
-  <Wrapper>
+<Wrapper gtick={gtick}>
 
-  <HeaderNav/>
+<HeaderNav/>
 
 <div className='divmain'>
 
@@ -98,26 +119,26 @@ useEffect(() => {
 
 
 <div className='box'>
- 
- <div className='div1'>
 
-  <div className='cir' ><TbTruckDelivery className='emo'/></div>
+<div className='div1'>
 
-  <p>Free Delivery</p>
+<div className='cir' ><TbTruckDelivery className='emo'/></div>
 
- </div>
- <div className='div1'>
-    <div className='cir'><MdSecurity className='emo' /></div>
-    <p>2 Years Warranty</p>
- </div>
- <div className='div1'>
+<p>Free Delivery</p>
+
+</div>
+<div className='div1'>
+  <div className='cir'><MdSecurity className='emo' /></div>
+  <p>2 Years Warranty</p>
+</div>
+<div className='div1'>
 <div className='cir'><GrServices className='emo'/></div>
 <p>After Sale Service</p>
- </div>
- <div className='div1'>
-  <div className='cir'> <TbReplaceFilled className='emo'/></div>
-  <p>7 Days Replacement</p>
- </div>
+</div>
+<div className='div1'>
+<div className='cir'> <TbReplaceFilled className='emo'/></div>
+<p>7 Days Replacement</p>
+</div>
 
 
 </div>
@@ -136,15 +157,27 @@ return <div key={val} className={gtick===val?'active':null} onClick={()=>stick(v
 
 }</div>
 
+<p className='pone'  id='pname'>Please Choose Color</p>
+
+
 <div className='count'>
 <GrFormAdd className='add' onClick={()=>{
-  Inc();
+Inc();
 }} /><p>{gcount}</p><HiMinusSm className='minus' onClick={()=>{
-  Drc();
+Drc();
 }} />
 </div>
 
-<Button className='but'>ADD TO CART</Button>
+<NavLink to={`/cart`}  onClick={(e)=>{
+if(gtick===undefined){
+  e.preventDefault();
+  document.getElementById('pname').style.color='red';
+  document.getElementById('pname').style.display='block';
+}
+
+Carting(idchan,price,gcount,gtick,SingleProduct);
+
+}}><Button className='but' type='submit'>ADD TO CART</Button></NavLink>
 
 </div>
 
@@ -152,7 +185,10 @@ return <div key={val} className={gtick===val?'active':null} onClick={()=>stick(v
 
 </div>
 
-    </Wrapper>
+  </Wrapper>
+
+    </ThemeProvider>
+  
   )
 }
 
@@ -195,6 +231,22 @@ height:fit-content;
  display:flex;
  justify-content:flex-start;
  flex-direction:column;
+ position: relative;
+
+
+ .ptwo{
+
+ }
+
+
+ .pone{
+  font-size: 1.4rem;
+  margin-top: 1rem;
+  position: absolute;
+  bottom: 7.7rem;
+  left: 19.5rem;
+  display: none;
+ }
 
 
 .pcut{
@@ -269,6 +321,7 @@ height:fit-content;
   font-size: 1.2rem;
   color: var(--txt);
   margin-bottom: 1rem;
+
 
   span{
     color: black;

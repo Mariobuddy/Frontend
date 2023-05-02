@@ -27,7 +27,7 @@ const SingleImage = (val) => {
         <p>{name}</p>
         <p>{<Currency price={price}/>}</p>
         <p>{lcut+'.....'}</p>
-        <NavLink to={`single/${id}`} className={'but'}><Button>Read More</Button></NavLink>
+        <NavLink to={`/single/${id}`} className={'but'}><Button>Read More</Button></NavLink>
 
       </div>
 
@@ -131,7 +131,7 @@ position: absolute;
 z-index: 444;
 display: flex;
 flex-direction: column;
-left: 43rem;
+left: 40rem;
 margin-top: 0rem;
 &:hover{
   animation: ${slide} 0.2s linear forwards;

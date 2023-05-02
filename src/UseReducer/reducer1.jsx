@@ -2,17 +2,12 @@ const reducer=(state,action)=>{
 
     switch(action.type){
 
-        case 'Mloading':
+        case 'Mload':
+            console.log('take')
             return{
                 ...state,
-                MainLoading:true
+                MainLoading:true,
             }
-
-            case 'MError':
-                return{
-                    ...state,
-                    MainError:true
-                }
 
                 case 'MProduct':
                     const Featuring=action.payload.filter((val)=>{
@@ -26,6 +21,13 @@ const reducer=(state,action)=>{
                         FeaturedProduct:Featuring
 
                     }
+
+
+                    case 'MError':
+                        return{
+                            ...state,
+                            MainError:true,
+                        }
 
                     case 'SingleL':
                         return{

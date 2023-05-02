@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react'
+import React,{useEffect} from 'react'
 import styled from 'styled-components';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { TfiLayoutGrid2Alt } from "react-icons/tfi";
@@ -6,13 +6,15 @@ import { UseProducts } from '../Context/ProductsContext';
 import Grid from '../MainBody/Grid';
 import List from '../MainBody/List';
 import HamBurger from '../MainBody/HamBurger';
+import EmptyPro from '../MainBody/EmptyPro';
+import Loading from '../MainBody/Loading';
 
 
 const Products = () => {
 
 
-const {AllProducts,GridOne,Listone,Grids}=UseProducts();
 
+const {Filter_Products,GridOne,Listone,Grids,SortSelect,SortSel,FilLoad}=UseProducts();
 
 
 
@@ -36,50 +38,67 @@ const {AllProducts,GridOne,Listone,Grids}=UseProducts();
     </div>
 
 
+    {
+
+      Filter_Products.length>0?
+
+
       <div className='right'>
         
-        <div className='navone'>
+      <div className='navone'>
 
-         <div className='one1'>
+       <div className='one1'>
 
-         <div className={Grids ? 'one activa':'one' } onClick={GridOne}><TfiLayoutGrid2Alt  className='icon'/></div>
-         
-        <div className={!Grids ? 'one activa':'one' } onClick={Listone}><GiHamburgerMenu className='icon'/></div>
+       <div className={Grids ? 'one activa':'one' } onClick={GridOne}><TfiLayoutGrid2Alt  className='icon'/></div>
+       
+      <div className={!Grids ? 'one activa':'one' } onClick={Listone}><GiHamburgerMenu className='icon'/></div>
 
-         </div>
+       </div>
 
 
-  
-         <div className='two2'>
-         <p style={{fontSize:'1.2rem'}}>{AllProducts && AllProducts.length} total products</p>
-         </div>
-        
 
-        <div className='three3'>
-        
-        <select>
-          <option>Price(Lowest)</option>
-          <option>Price(Highest)</option>
-          <option>Price(a-z)</option>
-          <option>Price(z-a)</option>
+       <div className='two2'>
+       <p style={{fontSize:'1.2rem'}}>{Filter_Products && Filter_Products.length} total products</p>
+       </div>
+      
+
+      <div className='three3'>
+      
+      <form action='#'>
+
+         <select onClick={SortSelect} name='sort'>
+        <option value={'recom'}  selected={SortSel==='recom'?true:false} id='sort1' name='sort'>Recommended</option>
+        <option value={'lowest'}  id='sort2' selected={SortSel==='lowest'?true:false}  name='sort'>Price(Lowest)</option>
+        <option value={'highest'} id='sort3' selected={SortSel==='highest'?true:false} name='sort'>Price(Highest)</option>
+        <option value={'atoz'}  id='sort4' selected={SortSel==='atoz'?true:false} name='sort'>Price(a-z)</option>
+        <option value={'ztoa'} id='sort5' selected={SortSel==='ztoa'?true:false} name='sort'>Price(z-a)</option>
         </select>
 
-        </div>
-           
-        </div>
-        
 
-        <div className='loadpro'>
-         
-          {
-            Grids===true?
-            <Grid/>:<List/>
-          }
 
-        </div>
-
+      </form>
 
       </div>
+         
+      </div>
+      
+
+      <div className='loadpro'>
+       
+        {
+          Grids===true?
+          <Grid/>:<List/>
+        }
+
+      </div>
+
+
+    </div>
+
+    :<Con><Loading/></Con>
+
+    }
+
 
 
     </Wrapper>
@@ -88,6 +107,22 @@ const {AllProducts,GridOne,Listone,Grids}=UseProducts();
 }
 
 export default Products;
+
+
+const Con=styled.div`
+width: 60vw;
+height: 80vh;
+display: flex;
+justify-content: center;
+align-items: center;
+
+
+@media (min-width:300px) and (max-width:600px){
+height: 55vh;
+
+}
+
+`;
 
 
 const Wrapper=styled.div`
@@ -197,10 +232,11 @@ height: fit-content;
       background-color: transparent;
       outline:none;
       border: 1px solid var(--txt);
-      width: 12rem;
+      width: 13rem;
       height: 3.1rem;
       padding-left: 1rem;
       font-size: 1.2rem;
+  
     }
 
   }
@@ -215,6 +251,12 @@ height: fit-content;
 }
 
 
+
+
+
+
+
+
 @media (min-width:300px) and (max-width:600px){
 
 
@@ -224,6 +266,7 @@ display: flex;
 justify-content: center;
 align-items: flex-start;
 padding: 0rem 0rem;
+margin-bottom: 6.5rem;
 
 
 
@@ -250,7 +293,6 @@ display: block;
 &:nth-child(1){
   transition: 0.5s ease;
   transform: rotate(45deg) translate(0.75em,1.25em);
-  /* transform-origin: 50% 100%; */
 
 
 }
@@ -264,7 +306,6 @@ display: block;
 &:nth-child(3){
   transition: 0.5s ease;
   transform: rotate(135deg) translate(-0.5em,1em);
-  /* transform-origin: 20% 40%; */
 
 }
 
@@ -281,9 +322,10 @@ display: block;
 
 
 .left{
-position: fixed;
-width: 62vw;
-height: 100vh;
+position: absolute;
+width: fit-content;
+height: fit-content;
+
 
 }
 
@@ -345,13 +387,14 @@ height: fit-content;
 
   .three3{
 
-    margin-left: 3.7rem;
+    position: absolute;
+    right: 0.1rem;
    
     select{
       background-color: transparent;
       outline:none;
       border: 1px solid var(--txt);
-      width: 12rem;
+      width: 13rem;
       height: 3.1rem;
       padding-left: 1rem;
       font-size: 1.2rem;

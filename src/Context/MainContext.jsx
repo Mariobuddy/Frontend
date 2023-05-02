@@ -2,7 +2,7 @@ import React,{createContext,useContext,useEffect,useReducer} from 'react';
 import axios from 'axios';
 import reducer from '../UseReducer/reducer1';
 
-const Api=`https://liquor-api-production.up.railway.app/api/products/take`;
+const Api=`http://192.168.0.101:5000/api/products/take`;
 export const AppMain=createContext();
 
 const MainContext = ({children}) => {
@@ -11,7 +11,7 @@ const MainContext = ({children}) => {
    
     MainProduct:[],
     MainError:false,
-    MainLoading:false,
+    MainLoading:true,
     FeaturedProduct:[],
     SingleProduct:{},
     SingleLoading:false
@@ -24,13 +24,11 @@ const MainContext = ({children}) => {
 
   const ApiData=async(api)=>{
 
-    dispatch({type:'MLoading'});
+    dispatch({ type: 'MLoad' });
 
     try {
-      
       let data=await axios.get(api);
       let data2=await data.data;
-
       dispatch({type:'MProduct',payload:data2});
       
     } catch (error) {

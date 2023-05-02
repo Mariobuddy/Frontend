@@ -2,13 +2,18 @@ import React,{useEffect} from 'react'
 import styled from 'styled-components';
 import { UseCustom } from '../Context/MainContext';
 import FeaturedRender from './FeaturedRender';
+import Loading from './Loading';
 
 const OurFeaturedProducts = () => {
-  const {FeaturedProduct}=UseCustom();
+  const {FeaturedProduct,MainLoading}=UseCustom();
+
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+
 
   return (
     <Wrapper>
@@ -23,17 +28,21 @@ const OurFeaturedProducts = () => {
              <h1>Our Feature Services</h1>
             
              </div>
-         <div className='productsone'>
+           {
+            MainLoading===true?
+            <Con><Loading/></Con>:
+            <div className='productsone'>
           
           
-         {
-            FeaturedProduct.map((val)=>{
-                 return <FeaturedRender key={val.id} {...val}/>
-            })
-          }
-
-
-         </div>
+            {
+               FeaturedProduct.map((val)=>{
+                    return <FeaturedRender key={val.id} {...val}/>
+               })
+             }
+   
+   
+            </div>
+           }
 
 
         </div>
@@ -44,6 +53,14 @@ const OurFeaturedProducts = () => {
 
 export default OurFeaturedProducts;
 
+
+const Con=styled.div`
+ width: 60vw;
+ height: 27rem;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+`;
 
 const Wrapper=styled.div`
 width: 100vw;
@@ -103,6 +120,7 @@ background-color: #f0efef;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     .infoone{
         margin-left: 5rem;
         align-self: flex-start;

@@ -21,21 +21,6 @@ font-family: 'Rouge Script', cursive; */
 
 html{
   font-size: 62.5%;
+  overflow-x: hidden;
+  
 }
-
-
-body{
-  /* border: 2px solid red; */
-}
-
-
-/* @media (min-width:300px) and (max-width:600px){
-
-  body{
-    width: 100vh;
-    height: fit-content;
-  }
-
-
-
-} */

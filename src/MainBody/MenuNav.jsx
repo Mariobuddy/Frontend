@@ -2,20 +2,91 @@ import React from 'react'
 import styled from 'styled-components';
 import Currency from './Currency';
 import { Button } from '../Header/Header';
+import { UseProducts } from '../Context/ProductsContext';
+import { BsCheckLg } from "react-icons/bs";
+
+
 
 const MenuNav = ({open}) => {
+
+
+
+
+const {SearchFilter,Clear,Filters:{text,colors,company,maxPrice,minPrice,Price},AllProducts,gline}=UseProducts();
+
+
+
+
+
+
+
+
+let Select=(data,pro)=>{
+
+ let cat= data && data.map((val)=>{
+    
+  return val[pro] 
+  })
+
+  return ['All',...new Set(cat)];
+
+}
+
+
+let SelectCat=Array.from(Select(AllProducts,'category'));
+
+
+let Select2=(data,pro)=>{
+
+  let cat= data && data.map((val)=>{
+     
+   return val[pro] 
+   })
+ 
+   return ['All',...new Set(cat)];
+ 
+ }
+ 
+ 
+ let SelectCat2=Array.from(Select2(AllProducts,'company'));
+
+
+
+ let Select3=(data,pro)=>{
+
+  let cat= data && data.map((val)=>{
+     
+   return val[pro] 
+   })
+ 
+   return new Set(['All'].concat(...cat));
+ 
+ }
+ 
+ 
+ let SelectCat3=Array.from(Select3(AllProducts,'colors'));
+
+
+
+
+
+
   return (
     <Wrapper open={open}>
     
     <div className={'menu'}>
 
    
-        <p className='fil' style={{position:'relative',fontSize:'2rem',left:'8rem',top:'4.5rem'}}>Filters</p>
+        <p className='fil' style={{position:'relative',display:'none',fontSize:'2rem',left:'8rem',top:'4.5rem'}}>Filters</p>
 
 
 
       <div className='search'>
-      <input type='text' placeholder='SEARCH'/>
+        
+        <form onSubmit={(e)=>e.preventDefault()}>
+        <input type='text' placeholder='SEARCH' onChange={SearchFilter}  name='text' value={text}/>
+        </form>
+
       </div>
 
 
@@ -25,28 +96,30 @@ const MenuNav = ({open}) => {
        <label>Category</label>
         
        <ul>
-           <li>All</li>
-           <li>Shirt</li>
-           <li>Tshirt</li>
-           <li>Watch</li>
-           <li>Shoes</li>
-           <li>Jeans</li>
+        
+        {
+          SelectCat.map((val,i)=>{
+           return <button type='button' id={i.toString()} className={gline===i.toString()?'takey':''} onClick={SearchFilter} key={i} value={val} name='category'>{val}</button>
+          })
+        }
+
         </ul>
          
        </div>
 
 
-      <div className='company'>
+      <div className='company' id='sele'>
 
       <label>Company</label>
  
-        <select>
-          <option>All</option>
-          <option>Roadster</option>
-          <option>Louis Philippe</option>
-          <option>Puma</option>
-          <option>Tommy Hilfigure</option>
-          <option>Sonata</option>
+      <select name={'company'}  onClick={SearchFilter} >
+
+        {
+         SelectCat2.map((val)=>{
+          return <option name='company'  value={val} key={val} selected={company===val?true:false} className={'opp'} >{val}</option>
+         })
+        }
+        
      </select>
 
       </div>
@@ -54,7 +127,23 @@ const MenuNav = ({open}) => {
       <div className='colors'>
         <label>Colors</label>
        
-       <div className='cir'></div>
+        <div className='colone'>
+        
+        {
+
+SelectCat3.map((val,i)=>{
+  
+  if(val==='All'){
+    return <button style={{backgroundColor:'transparent',border:'none',outline:'none',margin:'0rem 0.5rem',fontSize:'1.6rem'}} className={colors==='All'?'takey3 makele':'makele'}  key={i} name='colors' value={val} type='button' onClick={SearchFilter} >All</button>
+  }
+
+
+  return <button className={colors===val?'cir bactive':'cir'} key={i} name='colors' value={val} type='button' onClick={SearchFilter} style={{backgroundColor:val}}> {colors===val? <BsCheckLg className='check'/>:null} </button>
+})
+}
+
+
+        </div>
 
       </div>
 
@@ -62,13 +151,15 @@ const MenuNav = ({open}) => {
       <div className='price'>
 
       <label>Price</label>
-          <p>{<Currency price={60000} />}</p>
-         <input type='range' />
+          <p>{<Currency price={Price} />}</p>
+         <input type='range' className='ranger' min={minPrice} value={Price} name='Price'  onChange={SearchFilter} max={maxPrice}/>
 
        </div>
 
 
-       <Button>CLEAR FILTERS</Button>
+       <Button onClick={()=>{
+        Clear();
+       }} type='button'>CLEAR FILTERS</Button>
 
 
 
@@ -88,6 +179,47 @@ const Wrapper=styled.div`
 width: inherit;
 height: inherit;
 transition: all 0.5s linear;
+
+
+.bactive{
+  filter:brightness(100%) !important;
+}
+
+
+.takey{
+text-decoration: underline;
+text-decoration-color:var(--maincol) !important;
+color: var(--maincol) !important;
+text-decoration-thickness: 0.4rem;
+text-underline-offset: 0.4rem;
+z-index: 88;
+}
+
+.takey3{
+text-decoration: underline;
+text-decoration-color:var(--maincol) !important;
+color: var(--maincol) !important;
+text-decoration-thickness: 0.4rem;
+text-underline-offset: 0.4rem;
+z-index: 88;
+}
+
+
+.takey2{
+text-decoration: underline;
+text-decoration-color:var(--maincol) !important;
+color: var(--maincol) !important;
+text-decoration-thickness: 0.4rem;
+text-underline-offset: 0.4rem;
+}
+
+
+
+.makele{
+    color: var(--maincol);
+  }
+
+
 
 .menu{
 
@@ -122,7 +254,7 @@ outline: none;
 
 .category{
 
-margin-bottom: 2rem;
+margin-bottom: 0rem;
 
 label{
 font-size: 1.6rem;
@@ -130,13 +262,20 @@ font-weight: 500;
 }
 
 ul{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 
-  li{
-    list-style-type: none;
+  button{
+    background-color: transparent;
     font-size: 1.5rem;
     color: var(--txt);
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     margin-top: 1rem;
+    cursor: pointer;
+    border: none;
+    outline: none;
+
   }
 
 }
@@ -148,6 +287,7 @@ ul{
 
 display: flex;
 flex-direction: column;
+margin-top: 1rem;
 
 label{
   font-size: 1.6rem;
@@ -157,17 +297,22 @@ label{
 
 select{
     background-color: transparent;
-    width:13rem;
+    width:14rem;
     outline: none;
     border: 1px solid var(--txt);
     height: 3.1rem;
     margin-top: 1rem;
-    padding-left: 1rem;
-    color: var(--txt);
+    padding-left: 0.5rem;
+    color: var(--maincol);
+
+    &:hover{
+      color: var(--maincol);
+
+    }
 
    
     option{
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     color: var(--txt);
     }
 
@@ -179,6 +324,8 @@ select{
 .colors{
 margin-top: 2rem;
 margin-bottom: 2rem;
+display: flex;
+flex-direction: column;
 
 
 label{
@@ -186,14 +333,45 @@ label{
   font-weight: 500;
 }
 
-.cir{
+.colone{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 1rem;
+
+
+
+  .cir{
     margin-top: 0.5rem;
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 50%;
-    background-color: red;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-top: -0.1rem;
+    filter: brightness(60%);
+
+
+    .check{
+      color: #FFFFFF;
+      filter: brightness(100%);
+      font-weight: 700;
+      
+    }
+
 
 }
+
+
+
+}
+
 
 }
 
@@ -206,6 +384,54 @@ label{
 font-size: 1.6rem;
 font-weight: 500;
 }
+
+.ranger{
+  background-color: #c1b7b7 !important;
+  z-index: 333;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  border-radius: 1rem;
+  height: 0.8rem;
+  cursor: pointer;
+
+  &::-moz-range-thumb{
+    background-color:#FFFFFF;
+    border: 4px solid var(--maincol);
+    border-radius: 100%;
+    width: 0.8rem;
+    height: 0.8rem;
+  }
+
+  
+  &::-webkit-slider-thumb{
+    background-color:#FFFFFF;
+    border: 4px solid var(--maincol);
+    -webkit-appearance: none;
+    border-radius: 100%;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: -0.4rem;
+  }
+
+  &::-moz-range-progress{
+    background-color:var(--maincol);
+    height: inherit;
+    height: 0.7rem;
+    width: inherit;
+    border-radius: 1rem;
+
+  }
+
+  &::-webkit-slider-runnable-track{
+    background-color:var(--maincol);
+    height: 0.8rem;
+    border-radius: 1rem;
+  }
+
+}
+
+
 
 p{
   margin-top: 0.5rem;
@@ -222,6 +448,36 @@ p{
 
 
 @media (min-width:300px) and (max-width:600px){
+
+
+width: inherit;
+height: inherit;
+
+
+
+.takey{
+text-decoration: underline;
+text-decoration-color:#FFFFFF !important;
+color: #FFFFFF !important;
+text-decoration-thickness: 0.4rem;
+text-underline-offset: 0.4rem;
+z-index: 88;
+}
+
+
+.takey3{
+text-decoration: underline;
+text-decoration-color:#FFFFFF !important;
+color: #FFFFFF !important;
+text-decoration-thickness: 0.4rem;
+text-underline-offset: 0.4rem;
+z-index: 88;
+}
+
+.makele{
+    color: #FFFFFF;
+  }
+
 
 
 
@@ -241,10 +497,14 @@ transition: 0.5s ease;
 transform: ${({open})=>open ? 'translateX(100%)':'translateX(0)'};
 
 
+.fil{
+    display: block !important;
+    z-index: 88888888;
+}
 
   .search{
   margin-bottom: 2rem;
-  margin-top: 5.5rem;
+  margin-top: 6.8rem;
 
   
   
@@ -282,13 +542,9 @@ transform: ${({open})=>open ? 'translateX(100%)':'translateX(0)'};
   
   ul{
 
-    li{
-      list-style-type: none;
-      font-size: 1.5rem;
-      color: #FFFFFF;
-      margin-bottom: 2rem;
-      margin-top: 1rem;
-    }
+   button{
+    color: #FFFFFF !important;
+   }
 
   }
 
@@ -308,18 +564,19 @@ transform: ${({open})=>open ? 'translateX(100%)':'translateX(0)'};
   
   select{
       background-color: transparent;
-      width:13rem;
+      width:14.5rem;
       outline: none;
       border: 1px solid #FFFFFF;
       height: 3.1rem;
       margin-top: 1rem;
-      padding-left: 1rem;
-      color: #FFFFFF;
+      padding-left: 0.5rem;
+      padding-right: 1rem;
+      color: #FFFFFF !important;
 
      
       option{
       font-size: 1.5rem;
-      color: var(--txt);
+      color: #FFFFFF !important;
       }
 
     } 
@@ -343,6 +600,7 @@ transform: ${({open})=>open ? 'translateX(100%)':'translateX(0)'};
       height: 1.5rem;
       border-radius: 50%;
       background-color: red;
+      color: #FFFFFF;
 
   }
 
@@ -357,6 +615,54 @@ label{
 font-size: 1.6rem;
 font-weight: 500;
   }
+
+  .ranger{
+    
+  background-color: #c1b7b9;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+   appearance: none;
+  border-radius: 1rem;
+  height: 0.8rem;
+  cursor: pointer;
+
+  &::-moz-range-thumb{
+    background-color:#FFFFFF;
+    border: 4px solid var(--oran);
+    border-radius: 100%;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  
+  &::-webkit-slider-thumb{
+    background-color:#FFFFFF;
+    -webkit-appearance: none;
+    border: 4px solid var(--oran);
+    border-radius: 100%;
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-top: -0.6rem;
+  }
+
+  &::-moz-range-progress{
+    background-color:var(--oran);
+    height: inherit;
+  border-radius: 1rem;
+
+  }
+
+
+  &::-webkit-slider-runnable-track{
+    background-color:var(--oran);
+    height: 0.8rem;
+    border-radius: 1rem;
+  }
+
+
+
+}
+
 
   p{
     margin-top: 0.5rem;

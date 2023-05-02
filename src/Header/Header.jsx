@@ -5,6 +5,8 @@ import { FaShoppingCart } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
 import logom from '../logo.png';
+import { UseCart } from '../Context/CartContext';
+import { BiUserCircle } from "react-icons/bi";
 
 
 const Header = () => {
@@ -12,6 +14,7 @@ const Header = () => {
 
   const [gham,sham]=useState(false);
 
+  const {CartCir}=UseCart();
   return (
     <Wrapper>
 
@@ -20,11 +23,11 @@ const Header = () => {
         </div>
         <div className={gham? 'nav active1':'nav'}>
             <ul className='ultake'>
-              <div className='gol'>0</div>
+              <div className='gol'>{CartCir}</div>
           <li><NavLink className={'navone'} to={'/'}>Home</NavLink></li>
-          <li><NavLink className={'navone'} to={'/about'}>About</NavLink></li>
           <li><NavLink className={'navone'} to={'/products'}>Products</NavLink></li>
           <li><NavLink className={'navone'} to={'/contact'}>Contact</NavLink></li>
+          <li><NavLink className={'navone'} to={'/about'}><BiUserCircle className='user'/></NavLink></li>
           <li><NavLink className={'navone'} to={'/logout'}><Button>Logout</Button></NavLink></li>
           <li><NavLink className={'navone'} to={'/cart'}><FaShoppingCart className='carts'/></NavLink></li>
 
@@ -149,6 +152,12 @@ z-index: 9999999999;
     li{
       list-style-type: none;
 
+
+      .user{
+        font-size: 3rem;
+        margin-top: 0.8rem;
+      }
+
    .navone{
      text-decoration: none;
      color: #FFFFFF;
@@ -263,6 +272,12 @@ justify-content:space-between;
     li{
       list-style-type: none;
       margin-top: 4rem;
+
+
+      .user{
+        font-size: 3rem;
+        margin-top: 0rem;
+      }
 
    .navone{
      text-decoration: none;

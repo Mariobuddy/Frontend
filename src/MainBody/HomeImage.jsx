@@ -1,6 +1,7 @@
 import React,{useEffect} from 'react'
 import styled from 'styled-components';
 import { Button } from '../Header/Header';
+import { NavLink } from 'react-router-dom';
 
 const HomeImage = () => {
     let name='Mario Store';
@@ -15,8 +16,8 @@ const HomeImage = () => {
       <div className='infodiv'>
         <p className='wel'>WELCOME TO</p>
         <h1>{name}</h1>
-        <p className='para'>{name} is providing you all kinds of alchahol at very low cost.You have to just placed you order and we will delivery you within 2-3 days at your home without any extra charges.</p>
-        <Button className='buts'>SHOP NOW</Button>
+        <p className='para'>{name} is providing you all kinds of Outfits at very low cost.You have to just placed you order and we will delivery you within 2-3 days at your home without any extra charges.</p>
+        <NavLink to={'products'}><Button className='buts'>SHOP NOW</Button></NavLink>
 
       </div>
       <div className='imgdiv'>

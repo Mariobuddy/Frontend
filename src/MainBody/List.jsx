@@ -5,7 +5,7 @@ import SingleImage from './SingleImage';
 
 const List = () => {
 
-  const {AllProducts}=UseProducts();
+  const {Filter_Products}=UseProducts();
 
   return (
     <Wrapper>
@@ -13,7 +13,7 @@ const List = () => {
       
     {
     
-    AllProducts && AllProducts.map((val)=>{
+    Filter_Products && Filter_Products.map((val)=>{
       return <SingleImage key={val.id} {...val}/>
     })
 

@@ -35,7 +35,7 @@ const App = () => {
         <Route path='/products' element={<Products/>}/>
         <Route path='/logout' element={<Logout/>}/>
         <Route path='/cart' element={<Cart/>}/>
-        <Route path='products/single/:id' element={<Single/>}/>
+        <Route path='/single/:id' element={<Single/>}/>
         <Route path='*' element={<Error/>}/>
       </Routes>
       <Footer/>
@@ -55,6 +55,8 @@ height: fit-content;
 @media (min-width:300px) and (max-width:600px){
   width: 100vw;
   height: fit-content;
+  max-width: 100vw;
+  
 
 }
 

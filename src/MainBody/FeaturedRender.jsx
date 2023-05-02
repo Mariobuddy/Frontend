@@ -8,7 +8,7 @@ const FeaturedRender = (val) => {
 
 
   return (
-      <NavLink to={`products/single/${idchan}`} style={{textDecoration:'none',color:'#9b55c6'}}>
+      <NavLink to={`single/${idchan}`} style={{textDecoration:'none',color:'#9b55c6'}}>
 
         <Wrapper>
 
@@ -112,13 +112,14 @@ margin-top: 1rem;
 }
 
 @media (min-width:300px) and (max-width:600px){
- top: initial;
- width: 0rem;
+top: initial;
+width: 0rem;
 height: 21.8rem;
 background-color: #0000003e;
 position: absolute;
 z-index: 4444;
 margin-top: -23rem;
+
 }
 `;
 
@@ -129,6 +130,7 @@ const Wrapper=styled.div`
 width: 28rem;
 height: 25rem;
 background-color:#FFFFFF;
+
 
 
 &:hover ${Black}{

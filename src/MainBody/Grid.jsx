@@ -5,7 +5,7 @@ import { UseProducts } from '../Context/ProductsContext';
 
 const Grid = () => {
 
-  const {AllProducts}=UseProducts();
+  const {Filter_Products}=UseProducts();
 
 
   return (
@@ -14,7 +14,7 @@ const Grid = () => {
 
       {
      
-        AllProducts && AllProducts.map((data)=>{
+     Filter_Products && Filter_Products.map((data)=>{
      
         return <RenderPro key={data.id} {...data} />
 
@@ -31,7 +31,7 @@ export default Grid;
 
 
 const Wrapper=styled.div`
-width: inherit;
+width: 63vw;
 height: inherit;
 display: flex;
 flex-wrap: wrap;

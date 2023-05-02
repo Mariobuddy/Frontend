@@ -10,7 +10,7 @@ const RenderPro = (data) => {
     
   return (
 
-    <NavLink to={`single/${idchan}`}  style={{textDecoration:'none',color:'#9b55c6'}}>
+    <NavLink to={`/single/${idchan}`}  style={{textDecoration:'none',color:'#9b55c6'}}>
      
      
      <Wrapper>
@@ -111,8 +111,9 @@ margin-bottom: 2.7rem;
 justify-content: center;
 align-items: center;
 flex-direction: column;
-margin-right: 2.7rem;
 transition: all 0.2s ease;
+margin-right: 4rem;
+
 
 
 

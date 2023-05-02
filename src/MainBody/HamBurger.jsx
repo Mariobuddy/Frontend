@@ -5,7 +5,6 @@ import MenuNav from './MenuNav';
 const HamBurger = () => {
 
     const [open,sopen]=useState(true);
-    console.log(open);
 
   return (
    <>
@@ -27,8 +26,6 @@ export default HamBurger;
 const Wrapper=styled.div`
 width: inherit;
 height: inherit;
-position: absolute;
-
 .four4{
     position: absolute;
     width: 4rem;
@@ -41,7 +38,6 @@ position: absolute;
 
    .ham{
 
-    background-color: ${({open})=>open ? 'white':'black'};
 
     
     &:nth-child(1){
@@ -88,7 +84,7 @@ position: absolute;
     left: 90vw;
     right: 0;
     z-index: 555555555;
-    top: 10.8rem;
+    top: 12rem;
     cursor: pointer;
 
     .ham{

@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components';
 import { Button } from '../Header/Header';
 import { FaFacebook,FaInstagram,FaDiscord } from "react-icons/fa";
+import { NavLink } from 'react-router-dom';
 
 
 const Footer = () => {
@@ -34,9 +35,9 @@ const Footer = () => {
            
            <div className='social'>
 
-           <div className='s1'><FaDiscord className='dis' /></div>
-           <div className='s1'><FaFacebook className='fac' /></div>
-           <div className='s1'><FaInstagram className='insta' /></div>
+           <a ><div className='s1' ><FaDiscord className='dis' /></div></a>
+          <a href='https://www.facebook.com/profile.php?id=100006754845267' target='_blank'> <div className='s1'><FaFacebook className='fac' /></div></a>
+          <a href='https://www.instagram.com/https_rohit18/' target='_blank'> <div className='s1'><FaInstagram className='insta' /></div></a>
 
            </div>
 
@@ -223,6 +224,7 @@ p{
         height: 3rem;
        border-radius: 50%;
        border: 2px solid #FFFFFF;
+       cursor: pointer;
 
 
        .dis{
