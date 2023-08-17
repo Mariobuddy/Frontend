@@ -2,7 +2,7 @@ import React,{createContext,useContext,useEffect,useReducer} from 'react';
 import axios from 'axios';
 import reducer from '../UseReducer/reducer1';
 
-const Api=`http://192.168.0.101:5000/api/products`;
+const Api=`https://product-api-iv0z.onrender.com/api/products/take`;
 export const AppMain=createContext();
 
 const MainContext = ({children}) =>{

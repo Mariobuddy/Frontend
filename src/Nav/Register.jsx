@@ -25,7 +25,7 @@ const PostBut= async(e)=>{
  document.getElementById('buts').classList.remove('addbut');
   
 
- let res=await fetch('http://localhost:8000/register',{
+ let res=await fetch('https://backend-qxc0.onrender.com/register',{
       method:'POST',
       headers:{
      "Content-type": "application/json",

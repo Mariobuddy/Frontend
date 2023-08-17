@@ -11,7 +11,7 @@ const Logout = () => {
 let Log=async()=>{
 
 try {
-  let data1=await fetch('http://localhost:8000/loginout',{
+  let data1=await fetch('https://backend-qxc0.onrender.com/loginout',{
     method:"GET",
     headers:{
       Accept:"application/json",

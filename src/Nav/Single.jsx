@@ -98,7 +98,7 @@ displayone:takeit
     
 
 useEffect(()=>{
-  SingleLoading(`http://192.168.0.101:5000/api/products/${id}`);
+  SingleLoading(`https://product-api-iv0z.onrender.com/api/products/take/${id}`);
 },[]);
 
 useEffect(() => {

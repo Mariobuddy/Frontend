@@ -58,7 +58,7 @@ const Login = () => {
   const InpSubmit=async(e)=>{
    e.preventDefault();
     
-   let data1=await fetch('http://localhost:8000/login',{
+   let data1=await fetch('https://backend-qxc0.onrender.com/login',{
     method:'POST',
     headers:{
       "Content-Type":"application/json"
