@@ -2,10 +2,10 @@ import React,{createContext,useContext,useEffect,useReducer} from 'react';
 import axios from 'axios';
 import reducer from '../UseReducer/reducer1';
 
-const Api=`http://192.168.0.101:5000/api/products/take`;
+const Api=`http://192.168.0.101:5000/api/products`;
 export const AppMain=createContext();
 
-const MainContext = ({children}) => {
+const MainContext = ({children}) =>{
 
   let initial={
    
@@ -59,7 +59,6 @@ const MainContext = ({children}) => {
   },[]);
 
 
-  
 
   return (
     <div>

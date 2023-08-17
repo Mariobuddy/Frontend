@@ -54,7 +54,7 @@ const Cart = () => {
   
        <div className='buttons'>
         <NavLink to={'/products'}><Button className='but1'>CONTINUE SHOPPING</Button></NavLink>
-        <Button className='but2' onClick={DeleteAll}>CLEAR CART</Button>
+        <Button className='but2' onClick={(e)=>DeleteAll(e)}>CLEAR CART</Button>
         </div>
 
 

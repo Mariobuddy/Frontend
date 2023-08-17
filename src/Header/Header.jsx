@@ -7,15 +7,19 @@ import { MdClose } from "react-icons/md";
 import logom from '../logo.png';
 import { UseCart } from '../Context/CartContext';
 import { BiUserCircle } from "react-icons/bi";
+import { useTran } from '../App';
 
 
 const Header = () => {
+
+   const {state}=useTran();
 
 
   const [gham,sham]=useState(false);
 
   const {CartCir}=UseCart();
   return (
+    
     <Wrapper>
 
         <div className='imgone'>
@@ -24,12 +28,27 @@ const Header = () => {
         <div className={gham? 'nav active1':'nav'}>
             <ul className='ultake'>
               <div className='gol'>{CartCir}</div>
-          <li><NavLink className={'navone'} to={'/'}>Home</NavLink></li>
+               {
+                state===true?
+                <>
+           <li><NavLink className={'navone'} to={'/'}>Home</NavLink></li>
           <li><NavLink className={'navone'} to={'/products'}>Products</NavLink></li>
           <li><NavLink className={'navone'} to={'/contact'}>Contact</NavLink></li>
           <li><NavLink className={'navone'} to={'/about'}><BiUserCircle className='user'/></NavLink></li>
           <li><NavLink className={'navone'} to={'/logout'}><Button>Logout</Button></NavLink></li>
           <li><NavLink className={'navone'} to={'/cart'}><FaShoppingCart className='carts'/></NavLink></li>
+
+                </>:
+
+                <>
+          <li><NavLink className={'navone'} to={'/'}>Home</NavLink></li>
+          <li><NavLink className={'navone'} to={'/products'}>Products</NavLink></li>
+          <li><NavLink className={'navone'} to={'/contact'}>Contact</NavLink></li>
+          <li><NavLink className={'navone'} to={'/about'}><BiUserCircle className='user'/></NavLink></li>
+          <li><NavLink className={'navone'} to={'/login'}><Button>Login</Button></NavLink></li>
+          <li><NavLink className={'navone'} to={'/cart'}><FaShoppingCart className='carts'/></NavLink></li>
+                </>
+               }
 
             </ul>
            

@@ -53,9 +53,21 @@ const CartContext = ({children}) => {
     }
 
 
-    let DeleteAll=()=>{
+    let DeleteAll=async(e)=>{
+      e.preventDefault();
+       
+      try {
+      let data=await fetch('http://localhost:8000/deletecart',{
+        method:'DELETE',
+        credentials:'include'
+      });
 
+      console.log(data);
       dispatch({type:'DeleteAll'});
+      } catch (error) {
+        console.log(error);
+      }
+
 
     }
   

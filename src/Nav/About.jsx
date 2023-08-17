@@ -1,14 +1,52 @@
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import styled from 'styled-components';
 import logom from '../logo.png';
+import { useNavigate } from 'react-router-dom';
 
 
 const About = () => {
 
+  let history=useNavigate();
+
+  let [gdata,sdata]=useState([{name:'username',surname:'usersurname',email:'useremail',age:'userage',_id:'userid',number:'userno',gender:'usergender'}]);
+   
+  let CallLog=async()=>{
+
+   try {
+    let data1=await fetch('http://localhost:8000/about',{
+      method:'GET',
+      headers:{
+        Accept:"application/json",
+        "Content-Type":"application/json"
+      },
+      credentials:'include'
+    });
+
+  let data=await data1.json();
+
+  if(data.length==1){
+    sdata(data);
+  }
+
+
+   if(data1.status===400){
+     history('/login');
+     throw new Error('Error');
+    }
+    
+   } catch (error) {
+    console.log('Error');
+   }
+   
+
+  }
 
   useEffect(()=>{
     window.scrollTo(0,0);
+    CallLog();
   },[]);
+  
+
 
   return (
     <Wrapper>
@@ -25,13 +63,13 @@ const About = () => {
     <div className='info'>
      
   
-   <p>Name : <span>Rohit</span></p>
-   <p>Surname : <span>Bhatt</span></p>
-   <p>ID : <span>6418912a3d8b6ed5583e0db9</span></p>
-   <p>Contact No : <span>7057651379</span></p>
-   <p>Age : <span>22</span></p>
-   <p>Email : <span>rohitbuatt9755@gmail.com</span></p>
-   <p>Gender : <span>Male</span></p>
+   <p>Name : <span>{gdata && gdata[0].name}</span></p>
+   <p>Surname : <span>{gdata && gdata[0].surname}</span></p>
+   <p>ID : <span>{gdata && gdata[0]._id}</span></p>
+   <p>Contact No : <span>{gdata && gdata[0].number}</span></p>
+   <p>Age : <span>{gdata && gdata[0].age}</span></p>
+   <p>Email : <span>{gdata && gdata[0].email}</span></p>
+   <p>Gender : <span>{gdata && gdata[0].gender}</span></p> 
 
 
 

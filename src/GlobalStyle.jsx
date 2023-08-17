@@ -7,6 +7,7 @@ const GlobalStyle=createGlobalStyle`
     --maincol:#9b42d3;
     --txt:#696969;
     --oran:#ff3700;
+
 }
 
 `;

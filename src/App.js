@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useReducer,useContext,createContext} from 'react'
 import styled from 'styled-components';
 import Header from './Header/Header';
 import { Route,Routes } from 'react-router-dom';
@@ -13,10 +13,52 @@ import Single from './Nav/Single';
 import Error from './Nav/Error';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyle from './GlobalStyle';
+import Login from './Nav/Login';
+import Register from './Nav/Register';
+
+
+export const Trans=createContext();
 
 const App = () => {
 
+  let Routing=()=>{
+    return(
+      <Routes>
+      <Route path='/' element={<Home/>}/>
+      <Route path='/about' element={<About/>}/>
+      <Route path='/contact' element={<Contact/>}/>
+      <Route path='/products' element={<Products/>}/>
+      <Route path='/logout' element={<Logout/>}/>
+      <Route path='/login' element={<Login/>}/>
+      <Route path='/registering' element={<Register/>}/>
+      <Route path='/cart' element={<Cart/>}/>
+      <Route path='/single/:id' element={<Single/>}/>
+      <Route path='*' element={<Error/>}/>
+    </Routes>
+    )
+  }
   const theme={};
+
+
+  let tranreducer=(state,action)=>{
+    switch(action.type){
+      
+      case 'User':
+        return action.payload;
+
+        case 'NotUser':
+          return action.payload;
+
+    }
+  }
+
+
+  let initial=null;
+
+
+  let [state,dispatch]=useReducer(tranreducer,initial);
+
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -26,18 +68,13 @@ const App = () => {
 
    <ThemeProvider theme={theme}>
         <Wrapper>
-          <GlobalStyle/>
+
+
+      <Trans.Provider value={{state,dispatch}}>
+      <GlobalStyle/>
       <Header/>
-      <Routes>
-        <Route path='/' element={<Home/>}/>
-        <Route path='/about' element={<About/>}/>
-        <Route path='/contact' element={<Contact/>}/>
-        <Route path='/products' element={<Products/>}/>
-        <Route path='/logout' element={<Logout/>}/>
-        <Route path='/cart' element={<Cart/>}/>
-        <Route path='/single/:id' element={<Single/>}/>
-        <Route path='*' element={<Error/>}/>
-      </Routes>
+      <Routing/>
+      </Trans.Provider>
       <Footer/>
   
     </Wrapper>
@@ -46,7 +83,12 @@ const App = () => {
   );
 }
 
+export let useTran=()=>{
+  return useContext(Trans);
+}
+
 export default App;
+
 
 const Wrapper=styled.div`
 width: 100vw;

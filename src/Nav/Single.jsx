@@ -76,10 +76,29 @@ displayone:takeit
       
 
     }
+
+    const DataTran=async(e)=>{
+      try {
+
+        let data1=await fetch('http://localhost:8000/cart',{
+          method:'POST',
+          headers:{
+            Accept:"application/json",
+            "Content-Type":"application/json"
+          },
+          credentials:'include',
+          body:JSON.stringify({idchan,price,gcount,gtick,SingleProduct})
+        });
+        
+        console.log(data1);
+      } catch (error) {
+        console.log(error);
+      }
+    }
     
 
 useEffect(()=>{
-  SingleLoading(`http://192.168.0.101:5000/api/products/take/${id}`);
+  SingleLoading(`http://192.168.0.101:5000/api/products/${id}`);
 },[]);
 
 useEffect(() => {
@@ -168,16 +187,19 @@ Drc();
 }} />
 </div>
 
-<NavLink to={`/cart`}  onClick={(e)=>{
+<NavLink to={`/cart`}  onClick={async(e)=>{
 if(gtick===undefined){
   e.preventDefault();
   document.getElementById('pname').style.color='red';
   document.getElementById('pname').style.display='block';
 }
 
+
+
+
 Carting(idchan,price,gcount,gtick,SingleProduct);
 
-}}><Button className='but' type='submit'>ADD TO CART</Button></NavLink>
+}}><Button className='but' type='submit' onClick={DataTran}>ADD TO CART</Button></NavLink>
 
 </div>
 
